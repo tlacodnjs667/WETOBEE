@@ -1,0 +1,10 @@
+-- migrate:up
+CREATE TABLE cities (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(300) NOT NULL,
+    thumbnail VARCHAR(1000) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
+);
+-- migrate:down
+DROP TABLE cities;
