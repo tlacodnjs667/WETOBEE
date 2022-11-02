@@ -4,7 +4,7 @@ CREATE TABLE plans (
     user_id INT NOT NULL,
     selling_status_id INT NOT NULL,
     category_id INT NOT NULL,
-    plan_price INT NOT NULL,
+    plan_price DECIMAL(8,2) NOT NULL,
     sell_count INT NOT NULL,
     start_date DATE,
     end_date DATE,
