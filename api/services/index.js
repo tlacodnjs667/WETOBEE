@@ -4,5 +4,4 @@ const planService = require("./planService");
 
 module.exports = {
     userService,
-    planService
 }
