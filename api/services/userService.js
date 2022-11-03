@@ -1,7 +1,7 @@
 require('dotenv').config();
 const axios = require('axios');
 const jwt = require('jsonwebtoken');
-const userDao  = require('../models/userDao');
+const {userDao}  = require('../models');
 
 
 const signInKakao = async (kakaoToken) => {
@@ -35,7 +35,13 @@ const signInKakao = async (kakaoToken) => {
     return jwt.sign({ kakao_id: user.kakao_id }, process.env.KEY);
     
 };
-    
+
+const getUserInfo = async(userId) => {
+    const userInfo = await userDao.getUserInfo(userId);
+    return userInfo[0];
+}
+
 module.exports = {
+    getUserInfo,
     signInKakao
 }

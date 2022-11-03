@@ -33,7 +33,19 @@ const createSignUp = async (kakaoId, email, nickname, profileImage, gender) => {
     )
 }
 
-module.exports = { 
+const getUserInfo = async(userId) => {
+    return appDataSource.query(`
+        SELECT
+            profile_image AS profileImage,
+            nickname,
+            floor(point) as point
+        FROM users
+        WHERE id = ? ; 
+    `,[userId])
+}
+
+module.exports = {
     getUserBySocialId,
-    createSignUp
+    createSignUp,
+    getUserInfo
 }
