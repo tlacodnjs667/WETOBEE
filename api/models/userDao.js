@@ -44,8 +44,20 @@ const getUserInfo = async(userId) => {
     `,[userId])
 }
 
-module.exports = {
+const getUserPoint = async(userId) => {
+    const userPointInfo = await appDataSource.query(`
+        SELECT 
+            point
+        FROM users
+        WHERE id = ?
+    `, [userId])
+
+    return userPointInfo[0].point;
+}
+
+module.exports = { 
     getUserBySocialId,
     createSignUp,
-    getUserInfo
+    getUserInfo,
+    getUserPoint
 }
