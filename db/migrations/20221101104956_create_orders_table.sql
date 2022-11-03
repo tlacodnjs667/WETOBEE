@@ -7,7 +7,7 @@ CREATE TABLE orders (
     ordered_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (plan_id) REFERENCES plans(id) ON DELETE CASCADE,
-    FOREIGN KEY (order_status_id) REFERENCES order_statuss(id)
+    FOREIGN KEY (order_status_id) REFERENCES order_status(id)
 )
 
 -- migrate:down

@@ -12,6 +12,6 @@ CREATE TABLE plans (
     updated_at TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (selling_status_id) REFERENCES selling_status(id),
-    FOREIGN KEY (category_id) REFERENCES categories(id)
+    FOREIGN KEY (category_id) REFERENCES categories(id));
 -- migrate:down
 DROP TABLE plans;
