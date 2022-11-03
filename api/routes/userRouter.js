@@ -1,4 +1,6 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
+const { userController }  = require('../controllers');
 
-module.exports=router;
+router.get('/kakao/signin', userController.signInKakao);
+
+module.exports = router;
