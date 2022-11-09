@@ -5,8 +5,6 @@ const signInKakao = catchAsync (async (req, res) => {
 
     const kakaoToken = req.headers.authorization;
 
-    console.log(kakaoToken);
-
     if ( !kakaoToken ) {
         const err = new Error("KEY_ERROR");
         err.statusCode = 400;
@@ -14,9 +12,7 @@ const signInKakao = catchAsync (async (req, res) => {
     }
 
     const accessToken = await userService.signInKakao(kakaoToken);
-
-    console.log(accessToken);
-
+    
 return res.status(200).json({ accessToken: accessToken });
 });
 
