@@ -3,7 +3,6 @@ const axios = require('axios');
 const jwt = require('jsonwebtoken');
 const {userDao}  = require('../models');
 
-
 const signInKakao = async (kakaoToken) => {
         const result = await axios.get("https://kapi.kakao.com/v2/user/me", {
             headers: {

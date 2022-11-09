@@ -21,7 +21,7 @@ const getUserInfo= async(req, res) => {
 
     const userInfo = await userService.getUserInfo(userId);
 
-    res.status(200).json({message:'LOADING_SUCCESS', data:userInfo});
+    return res.status(200).json({message:'LOADING_SUCCESS', data:userInfo});
 }
 
 module.exports = {

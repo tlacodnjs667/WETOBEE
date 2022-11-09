@@ -140,7 +140,7 @@ const getPlanInfo = async (planId) => {
 };
 
 const addSellCount = async (planId, countForIncrease) => {
-  await appDataSource.query(`
+  return await appDataSource.query(`
     UPDATE plans
     SET sell_count =?
     WHERE id = ?
