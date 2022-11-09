@@ -34,7 +34,7 @@ const createSignUp = async (kakaoId, email, nickname, profileImage, gender) => {
 }
 
 const getUserInfo = async(userId) => {
-    return appDataSource.query(`
+    return await appDataSource.query(`
         SELECT
             profile_image AS profileImage,
             nickname,

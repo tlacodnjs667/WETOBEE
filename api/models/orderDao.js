@@ -1,6 +1,6 @@
 const { appDataSource } = require("../models/appDataSource");
-const {planDao} = require("./index");
-const {userDao} = require("./index");
+const planDao = require('./planDao');
+const userDao = require("./userDao");
 const ORDER_STATUS = require('../utils/orderStatusEnum');
 
 const checkOrder = async (userId, planId) => {
@@ -14,10 +14,10 @@ const checkOrder = async (userId, planId) => {
   return checkSameOrder;
 };
 
-const addOrder = async (userId, planId, orderStatusId) => {
+const addOrder = async (userId, planId) => {
+  const queryRunner = appDataSource.createQueryRunner();
   
   try {
-    const queryRunner = appDataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
 

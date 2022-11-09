@@ -1,7 +1,4 @@
-const {orderDao} = require('../models/orderDao');
-const {planDao} =require('../models/planDao');
-const {userDao} =require('../models/userDao');
-
+const {orderDao, planDao, userDao} = require('../models');
 
 const addOrder = async(userId, planId) => {
     
@@ -41,7 +38,7 @@ const addOrder = async(userId, planId) => {
         throw error;
     }
     
-    const addedOrder = await orderDao.addOrder(userId, planId, orderStatus[0]);
+    const addedOrder = await orderDao.addOrder(userId, planId);
 
     return addedOrder.insertId;
 
