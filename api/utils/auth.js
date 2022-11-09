@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const key = process.env.KEY;
 
 
-const validToken = async(req, res, next) =>{
+const validateToken = async(req, res, next) =>{
     const Token = req.header("authorization");
 
     if( !userToken ) return res.status(400).json({message : "KEY_ERROR" });
@@ -14,5 +14,5 @@ const validToken = async(req, res, next) =>{
 }
 
 module.exports = {
-    validToken
+    validateToken
 }
