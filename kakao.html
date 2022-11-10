@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div class="test"><img src="./kakao_login_medium_narrow.png"/></div>
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.0.0/kakao.min.js" integrity="sha384-PFHeU/4gvSH8kpvhrigAPfZGBDPs372JceJq3jAXce11bVA6rMvGWzvP4fMQuBGL" crossorigin="anonymous"></script>
+  <script>
+    Kakao.init("3d676e8c647e141d83d56f8bd4f94a3a");
+
+    function kakaoLogin() {
+      Kakao.Auth.authorize({
+        redirectUri : 'http://127.0.0.1:3000/oauth/kakao/callback',
+        scope : "profile_nickname, account_email",
+        // success : function (authObj) => {
+        //     console.log(`authObj : ${authObj}`);
+
+        //     // 백한테 authobj 속 access토큰만 줌
+        //     // 그 후 authorize를 통해 확인
+        //     // window.Kakao.API.request({
+        //     //   url: "/v2/user/me",
+        //     //   success: (res) => {
+        //     //     console.log("success: ");
+        //     //     console.log(res);
+        //     //   },
+        //     //   fail: (res) => {
+        //     //     console.log(res);
+        //     //   },
+        //     // });
+        //   }
+      });
+    }
+      const test = document.querySelector(".test");
+      test.addEventListener("click", kakaoLogin);
+    function kakaoLogout() {
+      if (!Kakao.Auth.getAccessToken()) {
+        alert("Not logged in.");
+        return;
+      }
+      Kakao.Auth.logout(function () {
+        alert("logout ok\naccess token -> " + Kakao.Auth.getAccessToken());
+      });
+    }
+  </script>
+  
+</body>
+</html>

@@ -1,57 +1,35 @@
-const { userDao } = require("../models");
-const axios = require("axios");
-const jwt = require("jsonwebtoken");
+require('dotenv').config();
+const axios = require('axios');
+const jwt = require('jsonwebtoken');
+const userDao  = require('../models/userDao');
 
-const signInKakao = async (code) => {
 
-    const clientId = process.env.CLIENT_ID;
-    const redirect_uri = process.env.REDIRECT_URI;
-
-    const getToken = await axios({
-        url:`https://kauth.kakao.com/oauth/token`,
-        method: 'POST',
-        headers:{ 
-        'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'
+const signInKakao = async (kakaoToken) => {
+    const result = await axios.get("https://kapi.kakao.com/v2/user/me", {
+        headers: {
+            Authorization: `Bearer ${kakaoToken}`,
         },
-        data : `grant_type=authorization_code&client_id=${clientId}&redirect_uri=${redirect_uri}&code=${code}`
     });
 
-    const userData = await axios({
-        url:`https://kapi.kakao.com/v2/user/me`,
-        method: 'GET',
-        headers:{
-        'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
-        "Authorization" : `Bearer ${getToken.data.access_token}`
-        }
-    });
+    const {data} = result;
+    const kakaoId = data.id;
+    const nickname = data.properties.nickname;
+    const email = data.kakao_account.email;
+    const profileImage = data.properties.profile_image;
+    const gender = data.kakao_account.gender;
 
-    const kakaoUser = userData.data;
-    
-    const kakaoId =  kakaoUser.id;
-    const email = kakaoUser.kakao_account.email;
-    const nickname = kakaoUser.properties.nickname;
-    const profileImage = kakaoUser.kakao_account.profile.profile_image_url;
-    const gender = kakaoUser.kakao_account.profile.gender;
+    if (!nickname || !email || !kakaoId) throw new error("KEY_ERROR", 400);
 
-	let user = await userDao.getUserBySocialId(kakaoId);
-    
-    if(!user){
+    const user = await userDao.getUserBySocialId(kakaoId);
+
+    if (!user) {
         await userDao.createSignUp(kakaoId, email, nickname, profileImage, gender);
-        user = await userDao.getUserBySocialId(kakaoId);
     }
 
-	const accessToken = jwt.sign({ user_id : user.id }, process.env.KEY)
-
-	return accessToken
-
-}
-
-module.exports = { 
+    return jwt.sign({ kakao_id: user.kakao_id }, process.env.JWT_SECRET);
+    
+};
+    
+module.exports = {
     signInKakao
 }
-
-
-
-
-
-

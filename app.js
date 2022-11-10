@@ -17,7 +17,7 @@ app.use(routes);
 app.use(globalErrorHandler);
 
 app.get('/ping', async (req, res) => {
-    res.status(200).json({message: '!! 연결 완료 !!'})
+    res.status(200).json({message: '!! 연결 완료 !!'});
 })
 
 const PORT = process.env.PORT;

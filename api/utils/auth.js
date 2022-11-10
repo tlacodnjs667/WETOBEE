@@ -1,12 +1,11 @@
 const jwt = require("jsonwebtoken");
-const key = process.env.KEY;
+const { promisify } = require("util");
 
+const validateToken = async(req, res, next) =>{
+    const accessToken = req.header("authorization");
 
-const validToken = async(req, res, next) =>{
-    const Token = req.header("authorization");
-
-    if( !userToken ) return res.status(400).json({message : "KEY_ERROR" });
-    const decoded = jwt.verify(Token, key);
+    if( !accessToken ) return res.status(400).json({message : "KEY_ERROR" });
+    const decoded = await promisify(jwt.verify)(accessToken, process.env.JWT_SECRET);
     const {user_id} = decoded;
     req.userId = user_id;
 
@@ -14,5 +13,5 @@ const validToken = async(req, res, next) =>{
 }
 
 module.exports = {
-    validToken
+    validateToken
 }
