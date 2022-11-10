@@ -5,7 +5,7 @@ const {catchAsync} = require("../utils/error");
 const addOrder = catchAsync(async (req, res) => {
 
  const { planId } = req.body;
- const { userId } = req.userId;
+ const userId = req.body.userId;
 
  if(!userId || !planId){
     const error = new Error("UNDEFINED_INPUT");
@@ -19,7 +19,7 @@ const addOrder = catchAsync(async (req, res) => {
 })
 
 const getOrderInfoByUserId = catchAsync(async (req, res) => {
-   const { userId } = req.userId;
+   const userId = req.userId;
    
    if(!userId) {
       const error = new Error("UNDEFINED_INPUT");

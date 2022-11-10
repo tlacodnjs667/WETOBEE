@@ -66,9 +66,21 @@ const deletePlan = async (userId, planId) => {
     return plan;
 }
 
-const planDetail = async (planId) => {
+const planDetail = async (planId, userId) => {
+
+    const planAuthorCheck = await planDao.checkAuthor(planId, userId);
+    const checkOwner = await planDao.checkOwner(planId, userId);
+
+    if(!planAuthorCheck.length && !checkOwner.length){
+        const error = new Error('USER_DOES_NOT_HAVE_AUTHORIZATION');
+        error.statusCod = 400;
+        throw error;        
+    }
+
     const plan = await planDao.planDetail(planId);
+
     return plan;
+    
 }
 
 

@@ -6,6 +6,6 @@ const reviewController = require("./reviewController");
 module.exports = {
     userController,
     orderController,
-    planController
+    planController,
     reviewController
 }

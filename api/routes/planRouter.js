@@ -4,11 +4,11 @@ const { validateToken } = require('../utils/auth');
 
 router.post('/allplan', planController.getAllPlan);
 router.post('/sellingplan/:planId', validateToken, planController.insertSellPlan);
+router.get('/sellstate/:stateId', planController.planFilterByState);
 
-router.get('/plandetail/:planId', planController.planDetail);
+router.get('/plandetail/:planId', validateToken, planController.planDetail);
 router.get('/userplan', validateToken, planController.getUserPlan);
 router.get('/cityplan/:cityId', planController.planFilterByCity);
-router.get('/sellstate/:stateId', planController.planFilterByState);
 
 router.post('/insert', validateToken, planController.insertPlan);
 

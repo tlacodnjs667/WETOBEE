@@ -2,7 +2,7 @@ const { userService } = require("../services");
 const { catchAsync } = require("../utils/error");
 
 const signInKakao = catchAsync (async (req, res) => {
-
+    // console.log(req.headers.authorization);
     const kakaoToken = req.headers.authorization;
 
     if ( !kakaoToken ) {

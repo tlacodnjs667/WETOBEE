@@ -1,16 +1,23 @@
 const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
+const { userDao } = require("../models");
+const { catchAsync } = require("./error");
 
-const validateToken = async(req, res, next) =>{
-    const accessToken = req.header("authorization");
+const validateToken = catchAsync(async(req, res, next) =>{
 
-    if( !accessToken ) return res.status(400).json({message : "KEY_ERROR" });
-    const decoded = await promisify(jwt.verify)(accessToken, process.env.JWT_SECRET);
-    const {user_id} = decoded;
-    req.userId = user_id;
+    const accessToken = req.headers.authorization;
+    if( !accessToken ) {
+        const error = new Error('UNDEFINED_TOKEN');
+        error.statusCode = 404;
+        throw error;
+    }
+    const decoded = await promisify(jwt.verify)(accessToken, process.env.KEY);
+    const {kakao_id} = decoded;
+    const userId = await userDao.getUserId(kakao_id);
+    req.userId = userId;
 
-    return next();
-}
+    next();
+})
 
 module.exports = {
     validateToken

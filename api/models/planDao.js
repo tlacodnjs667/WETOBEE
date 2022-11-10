@@ -69,8 +69,7 @@ const getUserPlan = async(userId) => {
 }
 
 const planDetail = async(planId) => {
-    return await appDataSource.query(
-        `
+    return await appDataSource.query(`
         SELECT
             p.id as planId,
             m.plan_id,
@@ -81,7 +80,6 @@ const planDetail = async(planId) => {
         FROM plans p
         inner join markers m on m.plan_id = p.id
         WHERE p.id = ${planId}
-        and m.plan_id = ${planId}
         `
     )
 }
@@ -147,6 +145,24 @@ const addSellCount = async (planId, countForIncrease) => {
   `, [planId, countForIncrease]);
 };
 
+const checkAuthor = async(planId, userId) => {
+    return await appDataSource.query(`
+        SELECT
+            id
+        FROM plans
+        WHERE user_id = ? AND id = ?
+    `, [userId, planId])
+}
+
+const checkOwner = async(planId, userId) => {
+    return await appDataSource.query(`
+        SELECT
+            id
+        FROM orders
+        WHERE user_id = ? AND plan_id = ?
+    `, [userId, planId]);
+}
+
 module.exports = { 
   getAllplan,
   insertPlan,
@@ -158,5 +174,7 @@ module.exports = {
   planDetail,
   insertSellPlan,
   getPlanInfo, 
-  addSellCount 
+  addSellCount,
+  checkAuthor,
+  checkOwner
 };

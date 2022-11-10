@@ -55,9 +55,21 @@ const getUserPoint = async(userId) => {
     return userPointInfo[0].point;
 }
 
+const getUserId = async(kakaoId) => {
+    const userId=await appDataSource.query(`
+    SELECT 
+        id
+    FROM users
+    WHERE kakao_id=?
+    `, [kakaoId]);
+    console.log(userId[0].id)
+    return userId[0].id;
+}
+
 module.exports = { 
     getUserBySocialId,
     createSignUp,
     getUserInfo,
-    getUserPoint
+    getUserPoint,
+    getUserId
 }

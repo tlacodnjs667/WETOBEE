@@ -32,7 +32,7 @@ const getReviewByPlanId = catchAsync( async(req, res) => {
 
 const getReviewByUserId = catchAsync(async(req, res) => {
     const {limit, offset} = req.query;
-    const {userId} = req.userId;
+    const userId = req.userId;
 
     if(!userId || !limit || !offset){
         const error = new Error('UNDEFINED_INPUT');
@@ -54,7 +54,7 @@ const getReviewImage = catchAsync(async(req, res)=>{
 
 const deleteReview = catchAsync(async(req, res)=>{
     const {reviewId}=req.query;
-    const {userId} = req.userId;
+    const userId = req.userId;
     
     if(!reviewId || !userId) {
         const error = new Error('UNDEFINED_INPUT');
@@ -67,8 +67,8 @@ const deleteReview = catchAsync(async(req, res)=>{
 })
 
 const likeReview = catchAsync(async (req, res)=>{
-    const {  reviewId } = req.body;
-    const {userId} = req.userId;
+    const {reviewId} = req.body;
+    const userId = await req.userId;
 
     if(!userId||!reviewId) {
         const error = new Error('UNDEFINED_INPUT');
@@ -82,7 +82,7 @@ const likeReview = catchAsync(async (req, res)=>{
 
 const deleteReviewLike = catchAsync(async(req, res) => {
     const { reviewId } = req.body;
-    const {userId} = req.userId;  
+    const userId = req.userId;  
 
     if(!reviewId || !userId) {
         const error = new Error('UNDEFINED_INPUT');
@@ -98,7 +98,7 @@ const deleteReviewLike = catchAsync(async(req, res) => {
 const getReviewLikesByUserId = catchAsync(async(req, res)=>{
 
     const {limit, offset} = req.query;
-    const {userId} = req.userId;
+    const userId = req.userId;
     
     if(!userId){
         const error = new Error('UNDEFINED_USER');
