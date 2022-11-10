@@ -17,6 +17,15 @@ const signInKakao = catchAsync (async (req, res) => {
 return res.status(200).json({ accessToken: accessToken });
 });
 
+const getUserInfo= async(req, res) => {
+    const userId = req.userId;
+
+    const userInfo = await userService.getUserInfo(userId);
+
+    res.status(200).json({message:'LOADING_SUCCESS', data:userInfo});
+}
+
 module.exports = {
+    getUserInfo,
     signInKakao
 }
